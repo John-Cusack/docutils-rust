@@ -10,5 +10,5 @@ name = "docutils_rust"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-docutils-core = { path = "../docutils-core" }
+docutils-core = { version = "0.1.0", path = "../docutils-core" }
 pyo3 = { version = "0.24", features = ["extension-module"] }
