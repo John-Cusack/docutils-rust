@@ -47,4 +47,7 @@ Python RSS includes the interpreter baseline (~29 MB on tiny inputs).
 ## Release
 
 Releases are human-gated. Prep state: `cargo build --release`, `cargo test
---workspace`, `cargo clippy --workspace --all-targets -- -D warnings` clean.
+--workspace`, `cargo clippy --workspace --all-targets -- -D warnings` clean;
+`cargo publish --dry-run -p docutils-core` clean. Publish order:
+`docutils-core` to crates.io first, then `docutils-py` (it depends on the
+released core), then the PyPI wheel.
