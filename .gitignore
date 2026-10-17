@@ -1,0 +1,10 @@
+/target
+__pycache__
+*.pyc
+.venv
+venv
+*.so
+*.egg-info
+dist/
+build/
+.DS_Store

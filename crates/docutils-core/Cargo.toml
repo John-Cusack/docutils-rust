@@ -1,0 +1,10 @@
+[package]
+name = "docutils-core"
+version = "0.1.0"
+edition = "2024"
+description = "Rust port of python/docutils: reStructuredText parser, transforms, and publishers"
+license = "MIT"
+
+[lib]
+name = "docutils_core"
+path = "src/lib.rs"

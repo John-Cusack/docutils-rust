@@ -1,0 +1,11 @@
+docutils-rust incorporates no code from other projects: it is a clean-room
+Rust implementation of the reStructuredText format. Behavior, message texts,
+and the HTML writer's output shape are modelled on:
+
+  python/docutils — https://github.com/python/docutils
+  Copyright (c) 2001-2026 Grubert, Goodger and contributors; BSD-2-Clause
+  (see https://repo.or.cz/docutils.git/blob/HEAD:/COPYING.txt).
+
+`tests/corpus/*.rst` are original fixtures written for this port (not copied
+from the docutils test suite). The equivalence harness (`tests/equiv.py`)
+compares against the installed `docutils` package only at test time.
