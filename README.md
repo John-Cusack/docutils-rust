@@ -27,6 +27,22 @@ are stripped on both sides before comparison).
 `report_level` 1, `halt_level` 4; fresh process per input for honest RSS):
 
 <!-- BENCH:TABLE -->
+| input | size | python wall | rust wall | python peak RSS | rust peak RSS |
+| --- | --- | --- | --- | --- | --- |
+| directives.rst | 1.2 KiB | 6.02 ms | 0.15 ms | 30312 KiB | 2264 KiB |
+| errors.rst | 0.3 KiB | 3.72 ms | 0.10 ms | 28988 KiB | 2348 KiB |
+| inline.rst | 0.7 KiB | 3.48 ms | 0.20 ms | 29132 KiB | 2268 KiB |
+| lists.rst | 0.6 KiB | 5.30 ms | 0.15 ms | 29668 KiB | 2308 KiB |
+| refs.rst | 0.9 KiB | 5.30 ms | 0.15 ms | 29968 KiB | 2280 KiB |
+| smoke.rst | 1.1 KiB | 6.85 ms | 0.25 ms | 30560 KiB | 2348 KiB |
+| tables.rst | 0.5 KiB | 5.21 ms | 0.10 ms | 30020 KiB | 2268 KiB |
+| big.rst (tiled smoke) | 256.3 KiB | 7769.57 ms | 115.30 ms | 625908 KiB | 47300 KiB |
+
+67x bulk (256 KiB), 17-52x small docs; ~13x lower peak RSS.
+Measured 2026-10-17 on AMD Ryzen 9 5950X (this machine): medians of 3
+fresh-process runs, 2 iters each (`benches/two_track.py --iters 2
+--big-kb 256`), CPython 3.12 + docutils 0.23 vs release `bench` example.
+Python RSS includes the interpreter baseline (~29 MB on tiny inputs).
 
 ## Release
 
