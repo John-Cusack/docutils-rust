@@ -271,7 +271,7 @@ fn version() -> &'static str {
 }
 
 #[pymodule]
-fn docutils_rust(m: &Bound<PyModule>) -> PyResult<()> {
+fn _core(m: &Bound<PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(publish_string, m)?)?;
     m.add_function(wrap_pyfunction!(publish_doctree, m)?)?;
     m.add_function(wrap_pyfunction!(version, m)?)?;

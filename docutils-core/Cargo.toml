@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2024"
 description = "Rust port of python/docutils: reStructuredText parser, transforms, and publishers"
 license = "MIT"
+repository = "https://github.com/John-Cusack/docutils-rust"
+readme = "README.md"
+keywords = ["docutils", "rst", "parser", "text-processing"]
+categories = ["parser-implementations", "text-processing"]
 
 [lib]
 name = "docutils_core"

@@ -1,0 +1,57 @@
+# Release configuration for the `docutils-rust` distribution.
+#
+# Lane-equivalent of the mirror-template `release.toml` (rustsmith
+# `docs/RELEASE.md`) for a clean-room port that is NOT a drop-in mirror of
+# `docutils`:
+#   * `project` / `python_import` are the import identity of the port
+#     (`docutils_rust`); the upstream `docutils` name stays with upstream,
+#     and `pypi_dist` therefore carries the `-rust` suffix;
+#   * publishing runs from the release lane with a PyPI/crates.io API token
+#     (no CI trusted publisher, so no `release_workflow` entry).
+# Every name and version here MUST match `Cargo.toml`,
+# `docutils-core/Cargo.toml`, and `pyproject.toml`, or the release prep
+# battery fails.
+
+[release]
+schema = 1
+# Import identity of the port (the upstream package name stays with
+# upstream).
+project = "docutils_rust"
+# Rust core crate published to crates.io (`docutils-core/Cargo.toml
+# [package] name`).
+rust_crate = "docutils-core"
+# Python distribution published to PyPI (`pyproject.toml [project] name`).
+pypi_dist = "docutils-rust"
+# Python import name (`docutils_rust`, the shim package next to the
+# extension).
+python_import = "docutils_rust"
+# Release version. MUST equal `[package] version` in `Cargo.toml`,
+# `docutils-core/Cargo.toml`, and `[project] version` in `pyproject.toml`.
+version = "0.1.0"
+# Supported Python versions (floor and the tested matrix).
+requires_python = ">=3.9"
+python_versions = ["3.9", "3.10", "3.11", "3.12", "3.13"]
+# Runners the release workflow matrix would build on.
+platforms = ["ubuntu-22.04", "macos-14", "windows-2022"]
+# Publishing repository (the public mirror repo).
+github_repo = "John-Cusack/docutils-rust"
+# License of this port's own code, and the upstream attribution that must
+# also appear in `NOTICE`.
+license_spdx = "MIT"
+upstream = "python/docutils"
+upstream_url = "https://github.com/python/docutils"
+upstream_license = "BSD-2-Clause"
+upstream_authors = "Grubert, Goodger and contributors"
+# The port has no Python runtime dependency (the core is pure Rust).
+runtime_dependencies = []
+# Smoke checks run against the installed wheel (Python expressions; each
+# must evaluate truthy). The first two publish a document through the Rust
+# parser and HTML writer, the third walks the doctree, the fourth proves
+# the compiled extension is the one in use.
+smoke_exprs = [
+  'docutils_rust.publish_string("Hello *world*.\n")[0].startswith("<!DOCTYPE html>")',
+  'docutils_rust.publish_string("Title\n=====\n\nHello *world*.\n")[0].count("<em>") == 1',
+  'docutils_rust.publish_doctree("Hello.\n")[0]["type"] == "document"',
+  'docutils_rust._core.__file__.endswith(".so")',
+  'docutils_rust.__version__ == "0.1.0"',
+]

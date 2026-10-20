@@ -7,8 +7,11 @@ implementation (see NOTICE); MIT licensed.
 
 ## Layout
 
-- `crates/docutils-core` — parser, transforms, publishers (`docutils_core`).
-- `crates/docutils-py` — PyO3 bindings (`publish_string`, `publish_doctree`).
+- `docutils-core/` — reusable Rust core: parser, transforms, publishers
+  (`docutils_core`), no Python dependency.
+- `src/lib.rs` + root `Cargo.toml` — the PyO3 binding crate (`docutils-py`),
+  compiled as the `docutils_rust._core` extension module.
+- `docutils_rust/` — Python shim (`publish_string`, `publish_doctree`).
 - `tests/corpus/*.rst` — equivalence fixtures; `tests/equiv.py` diffs doctree
   text, message levels, and HTML tag profile against the oracle.
 - `benches/two_track.py` — two-track wall/RSS bench (measured only).
@@ -44,10 +47,29 @@ fresh-process runs, 2 iters each (`benches/two_track.py --iters 2
 --big-kb 256`), CPython 3.12 + docutils 0.23 vs release `bench` example.
 Python RSS includes the interpreter baseline (~29 MB on tiny inputs).
 
+## Install
+
+Published as `docutils-rust` (version 0.1.0). The 0.1.0 files land on
+TestPyPI first (same wheel + sdist, same SHA-256) and are promoted to PyPI;
+until the production landing completes, install from TestPyPI:
+
+```sh
+pip install --index-url https://test.pypi.org/simple/ docutils-rust==0.1.0
+pip install docutils-rust==0.1.0   # PyPI, once promoted
+```
+
+The Rust core is on crates.io as `docutils-core` 0.1.0
+(`cargo add docutils-core`).
+
+The port covers the reStructuredText parser, the transform pipeline, and the
+HTML publisher. It is a clean-room implementation of a subset of `docutils`,
+not a drop-in replacement: the upstream import name stays with upstream, so
+this package imports as `docutils_rust`.
+
 ## Release
 
-Releases are human-gated. Prep state: `cargo build --release`, `cargo test
---workspace`, `cargo clippy --workspace --all-targets -- -D warnings` clean;
-`cargo publish --dry-run -p docutils-core` clean. Publish order:
-`docutils-core` to crates.io first, then `docutils-py` (it depends on the
-released core), then the PyPI wheel.
+`0.1.0` ships the `docutils-rust` Python distribution (wheel + sdist) and
+the `docutils-core` Rust crate. Release scope, artifacts, and the
+verification battery are recorded in `specs/release.md`; the lane config is
+`release.toml`; upstream attribution and the accepted divergences are in
+`NOTICE`.
