@@ -49,17 +49,17 @@ Python RSS includes the interpreter baseline (~29 MB on tiny inputs).
 
 ## Install
 
-Published as `docutils-rust` (version 0.1.0). The 0.1.0 files land on
-TestPyPI first (same wheel + sdist, same SHA-256) and are promoted to PyPI;
-until the production landing completes, install from TestPyPI:
+Published as `docutils-rust` 0.1.0. PyPI and TestPyPI carry the same
+wheel + sdist (same SHA-256):
 
 ```sh
-pip install --index-url https://test.pypi.org/simple/ docutils-rust==0.1.0
-pip install docutils-rust==0.1.0   # PyPI, once promoted
+pip install docutils-rust==0.1.0
 ```
 
-The Rust core is on crates.io as `docutils-core` 0.1.0
-(`cargo add docutils-core`).
+- PyPI: <https://pypi.org/project/docutils-rust/0.1.0/>
+- TestPyPI: <https://test.pypi.org/project/docutils-rust/0.1.0/>
+- Rust core on crates.io: <https://crates.io/crates/docutils-core/0.1.0>
+  (`cargo add docutils-core`)
 
 The port covers the reStructuredText parser, the transform pipeline, and the
 HTML publisher. It is a clean-room implementation of a subset of `docutils`,
@@ -69,7 +69,7 @@ this package imports as `docutils_rust`.
 ## Release
 
 `0.1.0` ships the `docutils-rust` Python distribution (wheel + sdist) and
-the `docutils-core` Rust crate. Release scope, artifacts, and the
-verification battery are recorded in `specs/release.md`; the lane config is
-`release.toml`; upstream attribution and the accepted divergences are in
-`NOTICE`.
+the `docutils-core` Rust crate; both are live (PyPI, TestPyPI, crates.io —
+see Install). Release scope, artifacts, and the verification battery are
+recorded in `specs/release.md`; the lane config is `release.toml`; upstream
+attribution and the accepted divergences are in `NOTICE`.
